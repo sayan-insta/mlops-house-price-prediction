@@ -3,9 +3,11 @@ name: Regression Pipeline
 on:
   push:
     branches:
+      - main
       - reg_branch
   pull_request:
     branches:
+      - main
       - reg_branch
 
 jobs:
@@ -23,9 +25,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Regression Script
-        run: |
-          python regression.py
+        run: python regression.py
 

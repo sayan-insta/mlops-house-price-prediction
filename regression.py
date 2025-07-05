@@ -7,8 +7,8 @@ def main():
     # Load the dataset
     data = load_data()
 
-    # For demonstration, let's assume the target is 'MEDV' (median house value)
-    target_column = 'MEDV'
+    # Set correct target column name for California housing dataset
+    target_column = 'MedHouseVal'
 
     # Split the data
     X_train, X_test, y_train, y_test = split_data(data, target_column)
@@ -23,7 +23,7 @@ def main():
     # Evaluate the model
     mse = mean_squared_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
-
+    
     print(f"Mean Squared Error: {mse}")
     print(f"R-squared: {r2}")
 

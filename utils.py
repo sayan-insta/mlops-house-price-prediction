@@ -14,3 +14,4 @@ def load_data():
     df = pd.DataFrame(data, columns=feature_names)
     df['MEDV'] = target
     return df
+

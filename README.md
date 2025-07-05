@@ -1,4 +1,4 @@
-# MLOps House Price Prediction
+#  MLOps House Price Prediction
 
 This project implements a **House Price Prediction** system using the **California Housing dataset** and demonstrates a simple **MLOps pipeline using GitHub Actions**.
 

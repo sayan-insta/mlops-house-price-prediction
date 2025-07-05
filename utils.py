@@ -1,16 +1,20 @@
+k# utils.py
+
 import pandas as pd
-import numpy as np
+from sklearn.model_selection import train_test_split
 
-def load_data():
-    data_url = "http://lib.stat.cmu.edu/datasets/boston"
-    raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
-    data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
-    target = raw_df.values[1::2, 2]
+def load_data(filepath):
+    """
+    Load dataset from a CSV file.
+    """
+    data = pd.read_csv(filepath)
+    return data
 
-    feature_names = [
-        'CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE',
-        'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'
-    ]
-    df = pd.DataFrame(data, columns=feature_names)
-    df['MEDV'] = target
-    return df
+def split_data(data, target_column, test_size=0.2, random_state=42):
+    """
+    Split the dataset into training and testing sets.
+    """
+    X = data.drop(target_column, axis=1)
+    y = data[target_column]
+    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+

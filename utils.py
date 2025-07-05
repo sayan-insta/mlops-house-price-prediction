@@ -1,14 +1,19 @@
-from sklearn.datasets import load_boston
+from sklearn.datasets import fetch_california_housing
 import pandas as pd
 
 def load_data():
     """
-    Load Boston Housing dataset from sklearn and return as DataFrame.
+    Load California Housing dataset from sklearn and return as DataFrame.
     """
-    # Load the dataset
-    boston = load_boston()
-    # Create DataFrame
-    data = pd.DataFrame(boston.data, columns=boston.feature_names)
-    data['MEDV'] = boston.target  # MEDV is the target variable (house prices)
+    housing = fetch_california_housing(as_frame=True)
+    data = housing.frame
     return data
+
+def split_data(data):
+    """
+    Split the data into features and target.
+    """
+    X = data.drop('MedHouseVal', axis=1)
+    y = data['MedHouseVal']
+    return X, y
 

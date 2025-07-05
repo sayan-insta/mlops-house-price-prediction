@@ -1,0 +1,12 @@
+- name: Upload Model
+  uses: actions/upload-artifact@v3
+  with:
+    name: trained-model
+    path: linear_regression_model.pkl
+
+- name: Upload Metrics
+  uses: actions/upload-artifact@v3
+  with:
+    name: model-metrics
+    path: metrics.txt
+

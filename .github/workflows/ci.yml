@@ -1,12 +1,31 @@
-- name: Upload Model
-  uses: actions/upload-artifact@v3
-  with:
-    name: trained-model
-    path: linear_regression_model.pkl
+name: Regression Pipeline
 
-- name: Upload Metrics
-  uses: actions/upload-artifact@v3
-  with:
-    name: model-metrics
-    path: metrics.txt
+on:
+  push:
+    branches:
+      - reg_branch
+  pull_request:
+    branches:
+      - reg_branch
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Regression Script
+        run: |
+          python regression.py
 

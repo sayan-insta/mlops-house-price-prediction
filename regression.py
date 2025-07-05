@@ -1,5 +1,3 @@
-# regression.py
-
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
@@ -7,8 +5,7 @@ from utils import load_data, split_data
 
 def main():
     # Load the dataset
-    filepath = 'data/housing.csv'  # Update with your actual file path
-    data = load_data(filepath)
+    data = load_data()
 
     # For demonstration, let's assume the target is 'MEDV' (median house value)
     target_column = 'MEDV'

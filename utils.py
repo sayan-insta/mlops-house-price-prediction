@@ -1,18 +1,14 @@
+from sklearn.datasets import load_boston
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
-def load_data(filepath):
+def load_data():
     """
-    Load dataset from a CSV file.
+    Load Boston Housing dataset from sklearn and return as DataFrame.
     """
-    data = pd.read_csv(filepath)
+    # Load the dataset
+    boston = load_boston()
+    # Create DataFrame
+    data = pd.DataFrame(boston.data, columns=boston.feature_names)
+    data['MEDV'] = boston.target  # MEDV is the target variable (house prices)
     return data
-
-def split_data(data, target_column, test_size=0.2, random_state=42):
-    """
-    Split the dataset into training and testing sets.
-    """
-    X = data.drop(target_column, axis=1)
-    y = data[target_column]
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
 

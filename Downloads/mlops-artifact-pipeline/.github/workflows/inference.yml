@@ -1,0 +1,76 @@
+name: Inference Workflow
+
+on:
+  push:
+    branches: [inference]  # triggers only when pushing to inference branch
+  pull_request:
+    branches: [inference]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Pytest
+        run: PYTHONPATH=. pytest tests/
+
+  train:
+    name: Train Model
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Training Script
+        run: python src/train.py
+
+      - name: Upload Trained Model
+        uses: actions/upload-artifact@v3
+        with:
+          name: model
+          path: model_train.pkl
+
+  inference:
+    name: Run Inference
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download Trained Model
+        uses: actions/download-artifact@v3
+        with:
+          name: model
+
+      - name: Run Inference Script
+        run: python src/inference.py
+
